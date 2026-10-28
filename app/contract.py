@@ -26,4 +26,9 @@ def contract_violations(result) -> list[str]:
     t = result.get("temp_c")
     if isinstance(t, (int, float)) and not (-90 <= t <= 60):
         problems.append(f"temp_c={t} is outside the plausible Celsius range -90..60 (wrong unit?)")
+
+    # NEW RULE: humidity, if present, must be 0..100
+    h = result.get("humidity")
+    if isinstance(h, (int, float)) and not (0 <= h <= 100):
+        problems.append(f"humidity={h} is outside the valid range 0..100")
     return problems
